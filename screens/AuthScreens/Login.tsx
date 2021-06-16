@@ -42,14 +42,14 @@ class Login extends React.Component {
 					Instaclone
 				</Text>
 				<View style={{ marginTop: 30 }}>
-					<View style={{ width: screenWidth * 0.9, marginTop: 10 }}></View>
+					{/* <View style={{ width: screenWidth * 0.9, marginTop: 10 }}></View> */}
 					<TextInput
 						style={{
 							height: 50,
 							width: screenWidth * 0.9,
 							color: 'white',
 							paddingHorizontal: 20,
-							margin: 0,
+							marginTop: 10,
 							borderRadius: 5,
 							borderColor: 'grey',
 							borderWidth: 1,
@@ -61,14 +61,14 @@ class Login extends React.Component {
 						onChangeText={(input) => this.props.updateEmail(input)}
 						value={this.props.user.email}
 					/>
-					<View style={{ width: screenWidth * 0.9, marginTop: 15 }}></View>
+					{/* <View style={{ width: screenWidth * 0.9, marginTop: 15 }}></View> */}
 					<TextInput
 						style={{
 							height: 50,
 							width: screenWidth * 0.9,
 							color: 'white',
 							paddingHorizontal: 20,
-							margin: 0,
+							marginTop: 15,
 							borderRadius: 5,
 							borderColor: 'grey',
 							borderWidth: 1,
