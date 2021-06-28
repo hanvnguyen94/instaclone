@@ -11,7 +11,12 @@ import {
 
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { updateEmail, updatePassword, updateUsername } from '../../actions/user'
+import {
+	updateEmail,
+	updatePassword,
+	updateUsername,
+	signup,
+} from '../../actions/user'
 
 const screenWidth = Dimensions.get('window').width
 
@@ -21,8 +26,11 @@ class Signup extends Component {
 	}
 
 	onLoginPress = () => {
-		if (this.props.user.password === this.state.repeat) {
-			alert('the passcode are identical')
+		if (
+			this.props.user.password === this.state.repeat &&
+			this.props.user.username !== ''
+		) {
+			this.props.signup()
 		} else {
 			alert('wrong password')
 		}
@@ -31,8 +39,7 @@ class Signup extends Component {
 	render() {
 		return (
 			<View style={styles.container}>
-				{/* email */}
-
+				{/* user name */}
 				{/* <View style={{ width: screenWidth * 0.9, marginTop: 10 }}></View> */}
 				<TextInput
 					style={{
@@ -40,20 +47,20 @@ class Signup extends Component {
 						width: screenWidth * 0.9,
 						color: 'white',
 						paddingHorizontal: 20,
-						margin: 0,
 						borderRadius: 5,
 						borderColor: 'grey',
 						borderWidth: 1,
 					}}
 					placeholderTextColor={'grey'}
-					placeholder={'example@example.com'}
+					placeholder={'Username'}
 					// value={this.props.user.email}
 					// onChangeText={input=>this.props.updateEmail(input)}
-					onChangeText={(input) => this.props.updateEmail(input)}
-					value={this.props.user.email}
+					onChangeText={(input) => this.props.updateUsername(input)}
+					value={this.props.user.username}
 				/>
 
-				{/* user name */}
+				{/* email */}
+
 				{/* <View style={{ width: screenWidth * 0.9, marginTop: 10 }}></View> */}
 				<TextInput
 					style={{
@@ -67,11 +74,11 @@ class Signup extends Component {
 						borderWidth: 1,
 					}}
 					placeholderTextColor={'grey'}
-					placeholder={'Username'}
+					placeholder={'example@example.com'}
 					// value={this.props.user.email}
 					// onChangeText={input=>this.props.updateEmail(input)}
-					onChangeText={(input) => this.props.updateUsername(input)}
-					value={this.props.user.username}
+					onChangeText={(input) => this.props.updateEmail(input)}
+					value={this.props.user.email}
 				/>
 
 				{/* password */}
@@ -151,7 +158,7 @@ const styles = StyleSheet.create({
 
 const mapDispatchToProps = (dispatch) => {
 	return bindActionCreators(
-		{ updateEmail, updatePassword, updateUsername },
+		{ updateEmail, updatePassword, updateUsername, signup },
 		dispatch
 	)
 }
