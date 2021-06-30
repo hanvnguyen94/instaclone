@@ -27,7 +27,7 @@ export const signup = () => {
 					username: username,
 					email: email,
 					posts: [],
-					bia: '',
+					bio: '',
 					likes: 0,
 					photo: '',
 				}
@@ -38,5 +38,43 @@ export const signup = () => {
 		} catch (e) {
 			alert(e)
 		}
+	}
+}
+
+export const login = () => {
+	return async (dispatch, getState) => {
+		try {
+			const { email, password } = getState().user
+			const response = await firebase
+				.auth()
+				.signInWithEmailAndPassword(email, password)
+
+			dispatch(getUser(response.user.uid)) // retrives the unique id of the user
+		} catch (e) {
+			alert(e)
+		}
+	}
+}
+
+// therefore in the func below we need to get statistics and // data from the user with the givien unique id
+export const getUser = (uid) => {
+	return async (dispatch) => {
+		const userQuery = await db.collection('users').doc(uid).get()
+
+		let user = userQuery.data()
+		let posts = []
+
+		const postsQuery = await db
+			.collection('posts')
+			.where('uid', '==', uid)
+			.get()
+
+		postsQuery.forEach(function (response) {
+			posts.push(response.data())
+		})
+
+		user.posts = orderBy(posts, 'data', 'desc')
+
+		dispatch({ type: 'LOGIN', payload: user })
 	}
 }
